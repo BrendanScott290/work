@@ -1,0 +1,60 @@
+# Tanks Game
+
+import random
+
+# Tank class
+class Tank:
+    def __init__(self, name):
+        self.name = name
+        self.health = 100
+        self.ammo = 10
+
+    def fire(self, target):
+        if self.ammo > 0:
+            damage = random.randint(10, 30)
+            self.ammo -= 1
+            target.health -= damage
+            print(f"{self.name} fires at {target.name} and deals {damage} damage!")
+        else:
+            print(f"{self.name} is out of ammo!")
+
+    def repair(self):
+        if self.health < 100:
+            repair_amount = random.randint(10, 20)
+            self.health += repair_amount
+            print(f"{self.name} performs repairs and recovers {repair_amount} health!")
+        else:
+            print(f"{self.name} is already at full health!")
+
+# Game Loop
+def play_game():
+    # Create two tanks
+    tank1 = Tank("Tank1")
+    tank2 = Tank("Tank2")
+
+    while True:
+        print(f"Tank1 Health: {tank1.health}, Ammo: {tank1.ammo}")
+        print(f"Tank2 Health: {tank2.health}, Ammo: {tank2.ammo}")
+        print("---")
+
+        # Tank1's turn
+        print("Tank1's turn")
+        tank1.fire(tank2)
+
+        if tank2.health <= 0:
+            print(f"{tank2.name} has no health left. {tank1.name} wins!")
+            break
+
+        tank1.repair()
+
+        # Tank2's turn
+        print("Tank2's turn")
+        tank2.fire(tank1)
+
+        if tank1.health <= 0:
+            print(f"{tank1.name} has no health left.tank2.name} wins!")
+            break
+
+        tank2.repair()
+
+play_game()
